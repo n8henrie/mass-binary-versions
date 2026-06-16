@@ -1,0 +1,380 @@
+# mass-binary-versions
+
+Vibe-coded with Claude Opus 4.8 on Jun 15, 2026, minimal updates.
+
+`mass-binary-versions` preserves Music Assistant AirPlay binary provenance while GitHub Actions artifacts are still available.
+
+It caches three related things in SQLite:
+
+1. GitHub Actions artifacts from `music-assistant/libraop` and `music-assistant/cliairplay`.
+2. SHA-256 hashes of downloaded artifact archives and of each extracted binary.
+3. Music Assistant server tags from `music-assistant/server`, with SHA-256 hashes of embedded AirPlay binaries under `music_assistant/providers/airplay/bin/`.
+
+The useful join is:
+
+```text
+music-assistant/server tag
+  -> embedded AirPlay binary sha256
+  -> cached helper artifact extracted file sha256
+  -> helper workflow_run.head_sha
+  -> compatible libraop or cliairplay commit
+```
+
+## Default update
+
+With no subcommand, the program performs the full update:
+
+```bash
+mass-binary-versions
+```
+
+That concurrently crawls all three sources:
+
+```text
+music-assistant/libraop      cliraop-* GitHub Actions artifacts
+music-assistant/cliairplay   cliap2-* GitHub Actions artifacts
+music-assistant/server       release/tag source zipballs and embedded AirPlay binaries
+```
+
+After the concurrent database crawl succeeds, it rewrites the generated compatibility table in `README.md`.
+
+Use a specific database path with either the flag or environment variable:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3
+MA_ARTIFACT_DB=mass-binary-versions.sqlite3 mass-binary-versions
+```
+
+Explicit equivalent:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 update-all
+```
+
+Useful `update-all` options:
+
+```bash
+mass-binary-versions update-all --force
+mass-binary-versions update-all --metadata-only
+mass-binary-versions update-all --no-readme
+mass-binary-versions update-all --readme-limit 100
+mass-binary-versions update-all --max-artifact-pages 2 --max-server-tag-pages 2
+```
+
+## Music Assistant AirPlay compatibility
+
+This table is generated from the SQLite cache. The GitHub workflow updates it after each daily crawl.
+
+<!-- MA_ARTIFACT_CACHE_TABLE_START -->
+| Music Assistant release | server rev | cliairplay commit | libraop commit |
+|---|---:|---:|---:|
+| `2.10.0.dev2026061509` | [`7f2b0f8e5017`](https://github.com/music-assistant/server/commit/7f2b0f8e5017e9b40597d9e3364c2e7d6643d5c8) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061415` | [`c57e475f3ca2`](https://github.com/music-assistant/server/commit/c57e475f3ca29a1c617205bc60090e2ebc5c071b) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061407` | [`02bfd66d0350`](https://github.com/music-assistant/server/commit/02bfd66d0350b846cf73ffe5daa8a963a885e72f) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061308` | [`eb39dea7dab5`](https://github.com/music-assistant/server/commit/eb39dea7dab576fbb9da9f89b80745fa451d861f) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061307` | [`3dddcc938856`](https://github.com/music-assistant/server/commit/3dddcc938856b16b92fcdf8684700a5d69b6b2c2) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061207` | [`69be0c919a8f`](https://github.com/music-assistant/server/commit/69be0c919a8f015c5c99e4a0351977442ffb19d6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061108` | [`483c07e222d6`](https://github.com/music-assistant/server/commit/483c07e222d673bb29d2d86cdefdae1d5db89a99) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.10.0.dev2026061105` | [`63e397269763`](https://github.com/music-assistant/server/commit/63e397269763db8304564edd832c1bd1942488ad) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.1` | [`6e7986b4463b`](https://github.com/music-assistant/server/commit/6e7986b4463b5b8fbfc0bb99548151af3e0a497e) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026061014` | [`ac79f5a69e3b`](https://github.com/music-assistant/server/commit/ac79f5a69e3b451ef6b477716141f45167bada8e) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026061009` | [`e6260e2f9c56`](https://github.com/music-assistant/server/commit/e6260e2f9c5628b8eb6e0731cbe8e65d4ac75af6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026061007` | [`edb2bab67857`](https://github.com/music-assistant/server/commit/edb2bab67857b1e1fe6042c5d040bf70b4650b4c) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060914` | [`b79a9a42afda`](https://github.com/music-assistant/server/commit/b79a9a42afdaaf7aed1dbea1d3d41a74e7a563c7) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060904` | [`e26bbcd00f13`](https://github.com/music-assistant/server/commit/e26bbcd00f133b3c06a0ded17ec09a6ddeffa237) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060808` | [`30fceb0412f3`](https://github.com/music-assistant/server/commit/30fceb0412f30b52c4b0b483dfde89c5c9943f66) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060708` | [`bebb04bcec1b`](https://github.com/music-assistant/server/commit/bebb04bcec1bb7c96d5ce35e9d3dfcef2bbcd341) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060707` | [`ddaa0202017b`](https://github.com/music-assistant/server/commit/ddaa0202017b2a45d4d925c6a5c32f8dc9d3dccf) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060611` | [`d3073756d34e`](https://github.com/music-assistant/server/commit/d3073756d34e6ac72c0fc5027dc253c0de98346e) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060606` | [`a2483d593781`](https://github.com/music-assistant/server/commit/a2483d59378176bf989ce517f39ad808790a012d) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060510` | [`f94184679625`](https://github.com/music-assistant/server/commit/f94184679625db326c08278c7308eb87d3e4d95b) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060507` | [`3c71e0293dd5`](https://github.com/music-assistant/server/commit/3c71e0293dd5b127dbe83fa71faea63530997545) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060407` | [`eb2a0b592396`](https://github.com/music-assistant/server/commit/eb2a0b5923963d36371941e5b683dd14d44fbcae) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060308` | [`5926e37e8433`](https://github.com/music-assistant/server/commit/5926e37e84330073f2c122633c6e9045d74c198a) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060218` | [`a795401ca70f`](https://github.com/music-assistant/server/commit/a795401ca70fcd1e70c008b5584495ba30472e44) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060208` | [`21b21c74cf5c`](https://github.com/music-assistant/server/commit/21b21c74cf5c584acc620e6159da1b2332baf9ce) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026060108` | [`9897c9f1b2ea`](https://github.com/music-assistant/server/commit/9897c9f1b2ea179413268325c65f05a5165d514b) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026053107` | [`b867dd6dee16`](https://github.com/music-assistant/server/commit/b867dd6dee16d8aeba4584a1db4f41c38d009d2d) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026053104` | [`f2e824641845`](https://github.com/music-assistant/server/commit/f2e82464184511b2c3b478d2ede0b200b2ba7b60) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026053007` | [`f3f08a11e1f1`](https://github.com/music-assistant/server/commit/f3f08a11e1f1cdd88c0bfca6469c91939e64643a) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026053006` | [`b5c52d01ed9d`](https://github.com/music-assistant/server/commit/b5c52d01ed9d22cc435628e96b4a6fda4246039e) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052906` | [`fe5e67010d5c`](https://github.com/music-assistant/server/commit/fe5e67010d5c97fe59455f0980e3a3937d2eb448) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052818` | [`705304706b5d`](https://github.com/music-assistant/server/commit/705304706b5d70cff3b66b7d04db31ccdc5aa37e) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052806` | [`e2e74af5c314`](https://github.com/music-assistant/server/commit/e2e74af5c3145424d3bb1f2a00206a125b933a23) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052710` | [`3f6b804d9e2e`](https://github.com/music-assistant/server/commit/3f6b804d9e2e18c0eb9f8ac4ea6e767651d11a16) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052707` | [`a5c04476300d`](https://github.com/music-assistant/server/commit/a5c04476300d677d30af19fb908cff6445e3416d) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052619` | [`b667d9c68607`](https://github.com/music-assistant/server/commit/b667d9c686071c521d443eaee4b766d1c1c0d015) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052606` | [`c239ef1117b9`](https://github.com/music-assistant/server/commit/c239ef1117b964ddd9e455bda83e8493ba8dfbe0) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052507` | [`dd018624b237`](https://github.com/music-assistant/server/commit/dd018624b2374297477d464fb4d65225d8b9b7c6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052406` | [`17bdce137ff8`](https://github.com/music-assistant/server/commit/17bdce137ff82921c963daef5ed98fbd5912c251) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052304` | [`7fef658ca0bc`](https://github.com/music-assistant/server/commit/7fef658ca0bcb3415d834cb1005f4664967e72a6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052206` | [`a57035df37e7`](https://github.com/music-assistant/server/commit/a57035df37e7209a0c37fc27290b5e463748597a) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052106` | [`1a1de04d711d`](https://github.com/music-assistant/server/commit/1a1de04d711d642e9d6469be5a013c9f9d2661ba) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052010` | [`502836145e17`](https://github.com/music-assistant/server/commit/502836145e1790f881b1f20b2e17bb621165e5b6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026052006` | [`0da20f7fa380`](https://github.com/music-assistant/server/commit/0da20f7fa380430c0f6a610d1793fef56c30cf15) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051906` | [`49467b983319`](https://github.com/music-assistant/server/commit/49467b9833192f73978ed61903457944ab16958f) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051905` | [`70d7b0ce99b4`](https://github.com/music-assistant/server/commit/70d7b0ce99b4db4ece36378acd55e831be4bc31d) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051706` | [`85b49a595f2e`](https://github.com/music-assistant/server/commit/85b49a595f2ea4bde98d26c93ebb96498f5bd2fb) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051606` | [`a2986b1de21d`](https://github.com/music-assistant/server/commit/a2986b1de21da34cc264b70273a5912773318cbf) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051506` | [`1de56422be42`](https://github.com/music-assistant/server/commit/1de56422be4294d0cb8e83595d3d73f5117a7c36) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051406` | [`f06fa52a9e6d`](https://github.com/music-assistant/server/commit/f06fa52a9e6d9c5ef20afbad301875ae84912b1b) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051306` | [`ff290a923162`](https://github.com/music-assistant/server/commit/ff290a923162b2d6dafc8a2df6e54c0f9f88ecb6) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051213` | [`37babad33008`](https://github.com/music-assistant/server/commit/37babad330080da7f68b5ccff4fbeef764311944) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051207` | [`c5df0ab1b8b3`](https://github.com/music-assistant/server/commit/c5df0ab1b8b3244533ae94bdacc4e58b12657c45) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026051106` | [`0589a7f8cbed`](https://github.com/music-assistant/server/commit/0589a7f8cbed52be8a435c41fc6b137debf5ea2f) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026050905` | [`4b67568d6764`](https://github.com/music-assistant/server/commit/4b67568d676469fd5133187ee377bd4877e31397) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026050805` | [`44d2d20c7bd5`](https://github.com/music-assistant/server/commit/44d2d20c7bd5108e75a7481fd376f887f36de8c0) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026050706` | [`ce8fdc1671c8`](https://github.com/music-assistant/server/commit/ce8fdc1671c8bb65667e9842de7750def35fff81) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026050614` | [`bcf79dc4a77f`](https://github.com/music-assistant/server/commit/bcf79dc4a77f759fa95108bf36b3b512c1c5d9c7) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
+| `2.9.0.dev2026050505` | [`870c2e3b24b2`](https://github.com/music-assistant/server/commit/870c2e3b24b2a99237b3d13844c8c56c78838486) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026050406` | [`0272b906d6ef`](https://github.com/music-assistant/server/commit/0272b906d6ef6fae08ebeb46cbbc88cbbe269a44) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026050205` | [`f3b5ec6cee71`](https://github.com/music-assistant/server/commit/f3b5ec6cee71e4b5980e862967013a0deaeb6dfc) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026050106` | [`33dd73ee95f1`](https://github.com/music-assistant/server/commit/33dd73ee95f1eff375a0fd6902eba39c86c4ab1c) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026043006` | [`d2f0a2fb128b`](https://github.com/music-assistant/server/commit/d2f0a2fb128b9afc2efa2f2aef9bd52f91caf8dc) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042906` | [`0f3145f0f948`](https://github.com/music-assistant/server/commit/0f3145f0f948132f20b4a52351b5a269f04e9db2) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042806` | [`73b6b81b2425`](https://github.com/music-assistant/server/commit/73b6b81b24254c4683bf4c442c1e030f2e5221f7) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042706` | [`d5d924def1e6`](https://github.com/music-assistant/server/commit/d5d924def1e630046a6cf1b2694a594535ac3449) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042505` | [`26d2a2103abb`](https://github.com/music-assistant/server/commit/26d2a2103abb017fa0b42ad5b4e9f8bf6e96e717) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042405` | [`89a60fcf2e54`](https://github.com/music-assistant/server/commit/89a60fcf2e54a7c4b4c0295bbaa245a645e18211) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042304` | [`321ce182ceaa`](https://github.com/music-assistant/server/commit/321ce182ceaa5630cf34bb9f2989e92d534a01e3) | [`8ce5a0606365`](https://github.com/music-assistant/cliairplay/commit/8ce5a0606365e1631d7697eb0d5b12d5c27a005d)<br>[`1dc2cd1a4dd8`](https://github.com/music-assistant/cliairplay/commit/1dc2cd1a4dd800b464397b26acfdbdb630206a95)<br>[`6189894b9bcd`](https://github.com/music-assistant/cliairplay/commit/6189894b9bcd156733b10794cd793b1ad03e0c40) | missing (0/3 hashes) |
+| `2.9.0.dev2026042115` | [`eaaa13b22f25`](https://github.com/music-assistant/server/commit/eaaa13b22f25d55722f7c3247ca93feeb19956f0) | [`8ce5a0606365`](https://github.com/music-assistant/cliairplay/commit/8ce5a0606365e1631d7697eb0d5b12d5c27a005d)<br>[`1dc2cd1a4dd8`](https://github.com/music-assistant/cliairplay/commit/1dc2cd1a4dd800b464397b26acfdbdb630206a95)<br>[`6189894b9bcd`](https://github.com/music-assistant/cliairplay/commit/6189894b9bcd156733b10794cd793b1ad03e0c40) | missing (0/3 hashes) |
+| `2.9.0.dev2026042114` | [`92485b0ce914`](https://github.com/music-assistant/server/commit/92485b0ce914cb5f67ce6667651133caf9ab2285) | [`8ce5a0606365`](https://github.com/music-assistant/cliairplay/commit/8ce5a0606365e1631d7697eb0d5b12d5c27a005d)<br>[`1dc2cd1a4dd8`](https://github.com/music-assistant/cliairplay/commit/1dc2cd1a4dd800b464397b26acfdbdb630206a95)<br>[`6189894b9bcd`](https://github.com/music-assistant/cliairplay/commit/6189894b9bcd156733b10794cd793b1ad03e0c40) | missing (0/3 hashes) |
+| `2.9.0.dev2026042104` | [`22855356b6cb`](https://github.com/music-assistant/server/commit/22855356b6cbe1a4911ed4868ea602d10bf0d9e1) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026042005` | [`ac8328d5aacf`](https://github.com/music-assistant/server/commit/ac8328d5aacfafa15e3f25c44ad6b255a4b8010f) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026041905` | [`894bc47c5aa3`](https://github.com/music-assistant/server/commit/894bc47c5aa3a51c91313ea576b9b0b869ca63be) | missing (0/4 hashes) | missing (0/3 hashes) |
+| `2.9.0.dev2026041805` | [`47e43df69601`](https://github.com/music-assistant/server/commit/47e43df69601ade9681caadc5f6e678e8e205e5d) | missing (0/4 hashes) | missing (0/3 hashes) |
+<!-- MA_ARTIFACT_CACHE_TABLE_END -->
+
+`missing` means the Music Assistant tag has an embedded binary hash, but the local cache has not seen a matching helper artifact file hash yet. This usually means the helper artifact expired before the crawler downloaded it, or the relevant workflow artifact has not been crawled yet.
+
+## Build with Nix
+
+```bash
+nix develop
+cargo generate-lockfile
+cargo build --locked
+```
+
+After `Cargo.lock` exists, the flake package can be built directly:
+
+```bash
+nix build
+nix run . -- --help
+```
+
+The included GitHub workflow runs `cargo generate-lockfile` on the first update and commits `Cargo.lock`, so a repo created from this project becomes fully packageable after its first successful run.
+
+## Authentication
+
+Use a token for better rate limits and artifact download access:
+
+```bash
+export GITHUB_TOKEN=github_pat_...
+```
+
+For the included GitHub workflow, `${{ github.token }}` is enough for these public repositories. The workflow grants `actions: read` and `contents: write`.
+
+## Targeted helper artifact crawl
+
+The default no-subcommand update is preferred. For targeted helper artifact work:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 crawl
+```
+
+Equivalent explicit form:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  crawl \
+  --repo music-assistant/libraop \
+  --repo music-assistant/cliairplay \
+  --artifact-prefix cliraop- \
+  --artifact-prefix cliap2-
+```
+
+Only store artifact metadata, without downloading archives:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 crawl --metadata-only
+```
+
+Force re-download of already-cached artifacts:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 crawl --force
+```
+
+## Targeted Music Assistant server tag crawl
+
+Crawl all server tags and hash embedded AirPlay binaries:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 crawl-server-tags
+```
+
+Crawl only one tag:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  crawl-server-tags \
+  --tag 2.8.7
+```
+
+The crawler records every embedded binary matching these names:
+
+```text
+music_assistant/providers/airplay/bin/cliap2-*
+music_assistant/providers/airplay/bin/cliraop-*
+```
+
+`cliap2-*` is associated with `music-assistant/cliairplay`; `cliraop-*` is associated with `music-assistant/libraop`.
+
+## Resolve a Music Assistant tag
+
+Rust CLI join:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  resolve-server-tag 2.8.7
+```
+
+SQLite example script:
+
+```bash
+scripts/resolve-mass-tag.sh mass-binary-versions.sqlite3 2.8.7
+```
+
+The output includes the Music Assistant tag, Music Assistant server revision, embedded binary name/hash, matching helper artifact, and helper `head_sha`.
+
+## Update the README table only
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  update-readme \
+  --path README.md \
+  --limit 75
+```
+
+Print the table without editing:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  update-readme \
+  --stdout
+```
+
+## GitHub automation
+
+The workflow at `.github/workflows/update-cache.yml` runs:
+
+```text
+on:
+  schedule: daily
+  workflow_dispatch: manual
+```
+
+It uses `DeterminateSystems/determinate-nix-action@v3`, builds in the Nix dev shell, runs the default full concurrent update, checkpoints/vacuums SQLite, and commits these files when they changed:
+
+```text
+Cargo.lock
+README.md
+mass-binary-versions.sqlite3
+```
+
+## Other queries
+
+Hash and look up a local binary from a Music Assistant checkout:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  lookup-file \
+  music_assistant/providers/airplay/bin/cliraop-linux-x86_64
+```
+
+Look up a raw binary SHA-256:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  lookup-hash f8aeb4a508e203ee93a6eab2a8caa424602d0cfc0c44cf4bfa94112e113f01b6
+```
+
+Look up a GitHub artifact/archive digest:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  lookup-archive 13bcbc38a82ea5cde6553a5b172bcc26d96859eedc930af7fe1e4bc75ae4725c
+```
+
+List cached rows for a helper commit:
+
+```bash
+mass-binary-versions \
+  --db mass-binary-versions.sqlite3 \
+  list-files \
+  --repo music-assistant/libraop \
+  --head-sha 556d89ee4ae4422a4d15e6e16401e2656d830aa4
+```
+
+Print counts:
+
+```bash
+mass-binary-versions --db mass-binary-versions.sqlite3 stats
+```
+
+## SQLite tables
+
+The main tables are:
+
+```text
+artifacts              one row per GitHub Actions artifact
+artifact_files         one row per extracted artifact file
+server_tags            one row per Music Assistant server tag
+server_tag_binaries    one row per embedded AirPlay binary in a server tag
+```
+
+Manual join query:
+
+```sql
+select
+  st.tag_name as mass_tag,
+  st.commit_sha as mass_revision,
+  b.helper_package,
+  b.binary_name,
+  b.file_sha256 as embedded_binary_sha256,
+  a.head_sha as helper_commit,
+  a.artifact_name,
+  a.artifact_id,
+  a.run_id,
+  a.created_at as artifact_created_at
+from server_tag_binaries b
+join server_tags st
+  on st.repo = b.repo
+ and st.tag_name = b.tag_name
+left join artifact_files f
+  on f.file_sha256 = b.file_sha256
+ and f.repo = b.helper_repo
+left join artifacts a
+  on a.repo = f.repo
+ and a.artifact_id = f.artifact_id
+where st.repo = 'music-assistant/server'
+  and st.tag_name = '2.8.7'
+order by b.helper_package, b.binary_name, a.created_at desc;
+```
+
+## Development
+
+```bash
+nix develop
+cargo fmt -- --check
+cargo clippy --all-targets --all-features -- -D warnings -W clippy::pedantic
+cargo test
+```

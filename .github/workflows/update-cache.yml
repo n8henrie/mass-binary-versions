@@ -1,0 +1,36 @@
+name: update-cache
+
+on:
+  schedule:
+    - cron: "17 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: update-cache
+  cancel-in-progress: false
+
+jobs:
+  update-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Build and update cache
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MA_VERSIONS_DB: mass-binary-versions.sqlite3
+        run: |
+          nix run
+
+      - name: Commit updates
+        run: nix run .#ci-update

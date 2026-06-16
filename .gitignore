@@ -1,0 +1,8 @@
+/target
+/.env
+*.sqlite3-shm
+*.sqlite3-wal
+*.sqlite3-journal
+/AGENTS.md
+/sync.sh
+/send.sh
