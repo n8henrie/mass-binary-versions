@@ -28,7 +28,7 @@
           ci-update = pkgs.writeShellApplication {
             name = "ci-update";
             runtimeInputs = [ pkgs.git ];
-            text = builtins.readFile ./scripts/ci-updates.sh;
+            text = builtins.readFile ./scripts/ci-update.sh;
           };
         };
 
