@@ -68,6 +68,10 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 <!-- MA_ARTIFACT_CACHE_TABLE_START -->
 | Music Assistant release | server rev | cliairplay commit | libraop commit |
 |---|---:|---:|---:|
+| `2.10.0.dev2026072604` | [`345fd3b37901`](https://github.com/music-assistant/server/commit/345fd3b37901272cead53a13bb14a411f56ff8b7) | none | none |
+| `2.10.0.dev2026072601` | [`08997d3eeb13`](https://github.com/music-assistant/server/commit/08997d3eeb13414f1727621ca48ac8b3a4c05c26) | none | none |
+| `2.10.0.dev2026072519` | [`0d47524afaaa`](https://github.com/music-assistant/server/commit/0d47524afaaa905ce5b00156e19c3a0fc437ea32) | none | none |
+| `2.10.0.dev2026072510` | [`a087405a28d2`](https://github.com/music-assistant/server/commit/a087405a28d2c0991803dbd9c037dc76fd05a631) | none | none |
 | `2.10.0.dev2026072509` | [`197ef9281a36`](https://github.com/music-assistant/server/commit/197ef9281a36dfd818ae88f207288974e2eaebb7) | none | none |
 | `2.10.0.dev2026072506` | [`2f90fef13f5f`](https://github.com/music-assistant/server/commit/2f90fef13f5fd0fb43b683d99e805e8272d03db3) | none | none |
 | `2.10.0.dev2026072406` | [`d044b96fd807`](https://github.com/music-assistant/server/commit/d044b96fd807610586292e59b8c0757521f66aed) | none | none |
@@ -139,10 +143,6 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 | `2.9.8` | [`7dc9fa25091e`](https://github.com/music-assistant/server/commit/7dc9fa25091e328730c42ebfd33fe55e53515f65) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
 | `2.9.7` | [`7dc9fa25091e`](https://github.com/music-assistant/server/commit/7dc9fa25091e328730c42ebfd33fe55e53515f65) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
 | `2.9.6` | [`696479f334f7`](https://github.com/music-assistant/server/commit/696479f334f71fa704586feae19e2f51da1fb61a) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
-| `2.9.5` | [`36e1dcea33e4`](https://github.com/music-assistant/server/commit/36e1dcea33e42a182f88258b25944d005c328dd0) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
-| `2.9.4` | [`eac299861005`](https://github.com/music-assistant/server/commit/eac2998610055e02313b4a0dbdd2a5b5c6f83715) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
-| `2.9.3` | [`e8fc4d1c91ef`](https://github.com/music-assistant/server/commit/e8fc4d1c91ef022beed235b5556080f395fec021) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
-| `2.9.2` | [`2dd6b56a6fda`](https://github.com/music-assistant/server/commit/2dd6b56a6fda8f734d70d1fb9f593699567ebdd2) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19) | missing (0/3 hashes) |
 <!-- MA_ARTIFACT_CACHE_TABLE_END -->
 
 `missing` means the Music Assistant tag has an embedded binary hash, but the local cache has not seen a matching helper artifact file hash yet. This usually means the helper artifact expired before the crawler downloaded it, or the relevant workflow artifact has not been crawled yet.
