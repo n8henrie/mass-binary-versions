@@ -68,6 +68,7 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 <!-- MA_ARTIFACT_CACHE_TABLE_START -->
 | Music Assistant release | server rev | cliairplay commit | libraop commit |
 |---|---:|---:|---:|
+| `2.10.0.dev2026080304` | [`d653365f8105`](https://github.com/music-assistant/server/commit/d653365f8105666fd9a99bd3a4e6d075cb43725b) | none | none |
 | `2.10.0.dev2026080201` | [`91ec08924ea7`](https://github.com/music-assistant/server/commit/91ec08924ea7bc0032fc19f2cbf4015ca54ef669) | none | none |
 | `2.10.0.dev2026080101` | [`38129f2f5820`](https://github.com/music-assistant/server/commit/38129f2f582097be1d61f2e5d494515e9c0db519) | none | none |
 | `2.10.0.dev2026073104` | [`8471eb51cbcb`](https://github.com/music-assistant/server/commit/8471eb51cbcb7a77fbbafc94e088be73b921d684) | none | none |
@@ -142,7 +143,6 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 | `2.10.0.dev2026061105` | [`63e397269763`](https://github.com/music-assistant/server/commit/63e397269763db8304564edd832c1bd1942488ad) | [`3bb927164399`](https://github.com/music-assistant/cliairplay/commit/3bb9271643999696638ee5df421b69bb5112fb32)<br>[`6aeceb49e4e3`](https://github.com/music-assistant/cliairplay/commit/6aeceb49e4e37d044f09be9369b082fc26bcfa19)<br>[`81a4413abf12`](https://github.com/music-assistant/cliairplay/commit/81a4413abf1254f1045f7cfa26c1543276598d3c) | missing (0/3 hashes) |
 | `2.10.0b10` | [`38129f2f5820`](https://github.com/music-assistant/server/commit/38129f2f582097be1d61f2e5d494515e9c0db519) | none | none |
 | `2.10.0b9` | [`be0bc094ef58`](https://github.com/music-assistant/server/commit/be0bc094ef583acfea18805090c9518a3481f4ad) | none | none |
-| `2.10.0b8` | [`be0bc094ef58`](https://github.com/music-assistant/server/commit/be0bc094ef583acfea18805090c9518a3481f4ad) | none | none |
 <!-- MA_ARTIFACT_CACHE_TABLE_END -->
 
 `missing` means the Music Assistant tag has an embedded binary hash, but the local cache has not seen a matching helper artifact file hash yet. This usually means the helper artifact expired before the crawler downloaded it, or the relevant workflow artifact has not been crawled yet.
