@@ -68,6 +68,8 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 <!-- MA_ARTIFACT_CACHE_TABLE_START -->
 | Music Assistant release | server rev | cliairplay commit | libraop commit |
 |---|---:|---:|---:|
+| `2.11.0.dev2026100814` | [`73257004745c`](https://github.com/music-assistant/server/commit/73257004745c8b44be6ef43f0001d6230098020d) | none | none |
+| `2.11.0.dev2026100803` | [`a813bcd44da9`](https://github.com/music-assistant/server/commit/a813bcd44da9bac651eaabf08e9ede890dfaba53) | none | none |
 | `2.11.0.dev2026100703` | [`8df8328fe7c7`](https://github.com/music-assistant/server/commit/8df8328fe7c7f726da68f9c0fd47b26b8b879fa0) | none | none |
 | `2.11.0.dev2026100603` | [`41113c424ab6`](https://github.com/music-assistant/server/commit/41113c424ab6b1659f433cb9d8bb0d1ab5f9cbfb) | none | none |
 | `2.11.0.dev2026100503` | [`8df7360d9c44`](https://github.com/music-assistant/server/commit/8df7360d9c44d295384924ae2688713849ba232a) | none | none |
@@ -141,8 +143,6 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 | `2.10.0.dev2026081203` | [`d5fcd47351fe`](https://github.com/music-assistant/server/commit/d5fcd47351fed5aaaf08068d48d44acc365e7b00) | none | none |
 | `2.10.0.dev2026081103` | [`a91504084610`](https://github.com/music-assistant/server/commit/a91504084610a817212c17174662cf73a4829bd9) | none | none |
 | `2.10.0.dev2026081100` | [`5cb6634a3fb6`](https://github.com/music-assistant/server/commit/5cb6634a3fb64adc84488b7f80ac39d033ee3714) | none | none |
-| `2.10.0.dev2026081018` | [`154f1326f218`](https://github.com/music-assistant/server/commit/154f1326f218880258f063660e75a9d0a00bb1e4) | none | none |
-| `2.10.0.dev2026081003` | [`e4a502dd0626`](https://github.com/music-assistant/server/commit/e4a502dd062691987a716f1cd8467cbcb33b3144) | none | none |
 <!-- MA_ARTIFACT_CACHE_TABLE_END -->
 
 `missing` means the Music Assistant tag has an embedded binary hash, but the local cache has not seen a matching helper artifact file hash yet. This usually means the helper artifact expired before the crawler downloaded it, or the relevant workflow artifact has not been crawled yet.
