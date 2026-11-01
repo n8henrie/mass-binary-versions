@@ -68,6 +68,7 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 <!-- MA_ARTIFACT_CACHE_TABLE_START -->
 | Music Assistant release | server rev | cliairplay commit | libraop commit |
 |---|---:|---:|---:|
+| `2.11.0.dev2026110104` | [`0a04d82d1bbb`](https://github.com/music-assistant/server/commit/0a04d82d1bbb6afb4d9eb4999dc7d3fb76918597) | none | none |
 | `2.11.0.dev2026103104` | [`beecc71083f0`](https://github.com/music-assistant/server/commit/beecc71083f040fc1f925db9ee9d3edd17e36592) | none | none |
 | `2.11.0.dev2026103004` | [`4444315b88f2`](https://github.com/music-assistant/server/commit/4444315b88f2d9a6557a24f8686d1e675da4e6b5) | none | none |
 | `2.11.0.dev2026102904` | [`3cade0343ae2`](https://github.com/music-assistant/server/commit/3cade0343ae2c0c8cffb09e59cb05492f8781a68) | none | none |
@@ -142,7 +143,6 @@ This table is generated from the SQLite cache. The GitHub workflow updates it af
 | `2.11.0b0` | [`1474ae2a16fc`](https://github.com/music-assistant/server/commit/1474ae2a16fc8ddd09921d92daf762d52115a905) | none | none |
 | `2.10.9` | [`912308ecfda2`](https://github.com/music-assistant/server/commit/912308ecfda2a01985dfcf555978815c7dda11a6) | none | none |
 | `2.10.8` | [`24c14e8bf89d`](https://github.com/music-assistant/server/commit/24c14e8bf89de472ceb23ecbd33407bdfcccbd01) | none | none |
-| `2.10.7` | [`76ad754a68ab`](https://github.com/music-assistant/server/commit/76ad754a68abdd0bfd179b13a2807d44771ddf90) | none | none |
 <!-- MA_ARTIFACT_CACHE_TABLE_END -->
 
 `missing` means the Music Assistant tag has an embedded binary hash, but the local cache has not seen a matching helper artifact file hash yet. This usually means the helper artifact expired before the crawler downloaded it, or the relevant workflow artifact has not been crawled yet.
